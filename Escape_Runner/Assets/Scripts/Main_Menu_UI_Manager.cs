@@ -2,33 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Main_Menu_UI_Manager : MonoBehaviour
 {
-    private Game_Controller _gameController;
-
-    private void Start()
-    {
-        MainMenuUIManagerWarmUp();
-    }
-
 
     public void StartNewGameButton()
     {
-        _gameController.ChangeSCreen(2);
+        ChangeScreen(2);
     }
 
 
-    private void MainMenuUIManagerWarmUp()
+    public void ChangeScreen(int _changeScreen)
     {
-        _gameController = GameObject.Find("Game_Controller").GetComponent<Game_Controller>();
-
-        if (_gameController == null)
+        switch (_changeScreen)
         {
-            Debug.LogError("Game Controller is NULL");
+            case 1:
+                MainMenu();
+                break;
+            case 2:
+                StartNewGame();
+                break;
+            case 3:
+                ContinueGame();
+                break;
+            case 4:
+                break;
+            default:
+                break;
         }
-    }    
+    }
 
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void StartNewGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void ContinueGame()
+    {
+        SceneManager.LoadScene(2);
+    }
 
 
 }

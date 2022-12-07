@@ -1,35 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player_Controller : MonoBehaviour
 {
     [SerializeField] private GameObject Player;
+    [SerializeField] private GameObject _playerContainer;
 
-
-    // Start is called before the first frame update
-    void Start()
+    public void SpawnNewPlayer()
     {
-        Instantiate(Player, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
-        AddComponents();
-        
+        GameObject newPlayer = Instantiate(Player, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        newPlayer.transform.parent = _playerContainer.transform;
+        newPlayer.AddComponent<Player>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void AddComponents()
-    {
-        Player.AddComponent<Rigidbody2D>();
-    }
-
-    private void PlayerSetup()
-    {
-        
-    }
-
-    
 }
