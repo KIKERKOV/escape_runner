@@ -9,6 +9,11 @@ public class Enemy_Controller : MonoBehaviour
         
     }
 
+    private void FollowPlayer()
+    {
+
+    }
+
     private void SpawnEnemy()
     {
 
