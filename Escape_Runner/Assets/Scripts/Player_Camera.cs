@@ -4,10 +4,5 @@ using UnityEngine;
 
 public class Player_Camera : MonoBehaviour
 {
-    void Start()
-    {
-
-
-    }
 
 }

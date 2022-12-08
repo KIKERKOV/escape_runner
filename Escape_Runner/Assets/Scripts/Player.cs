@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
+    public bool PlayerIsSpawned;
     float horizontal;
     float vertical;
     public float runSpeed = 20.0f;
@@ -13,8 +13,13 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidBody;
 
 
+    [SerializeField] private GameObject PlayerPrefab;
+    [SerializeField] private GameObject _playerContainer;
+    public Vector2 PlayerPosition;
+
     private void Start()
     {
+        NoClonesAllowed();
         _rigidBody = GetComponent<Rigidbody2D>();
         _playerCamera = GameObject.Find("Player_Camera").GetComponent<Player_Camera>();
         _playerCamera.transform.parent = transform.parent;
@@ -26,10 +31,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Movement();
+        PlayerMovement();
     }
 
-    private void Movement()
+    private void PlayerMovement()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
@@ -42,4 +47,21 @@ public class Player : MonoBehaviour
             Debug.Log("Vertical input");
         }
     }
+
+    public void SpawnNewPlayer()
+    {
+        GameObject newPlayer = Instantiate(PlayerPrefab, new Vector2(transform.position.x, transform.position.y), Quaternion.identity);
+        newPlayer.transform.parent = _playerContainer.transform;
+        newPlayer.name = "Player";
+        newPlayer.AddComponent<Player>();
+    }
+
+    private void NoClonesAllowed()
+    {
+        if (PlayerIsSpawned)
+        {
+            return;
+        }
+    }
+
 }

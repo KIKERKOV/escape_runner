@@ -6,13 +6,37 @@ public class Game_Controller : MonoBehaviour
     private Player_Controller _player_Controller;
     private Enemy_Controller _enemy_Controller;
     private Level_Design_Controller _level_Design_Controller;
+    private Player _player;
+    public bool SpawnNewPlayer;
 
 
     private void Start()
     {
         GameControllerWarmUp();
-        StartNewGame();
+
+        _player = GameObject.Find("Player").GetComponent<Player>();
+        if (_player == null)
+        {
+            Debug.LogWarning("Player is NULL");
+        }
     }
+
+
+
+    void Update()
+    {
+        SpawnPlayer();
+    }
+
+    private void SpawnPlayer()
+    {
+        if (SpawnNewPlayer)
+        {
+            _player.SpawnNewPlayer();
+            SpawnNewPlayer = false;
+        }
+    }
+
 
     private void GameControllerWarmUp()
     {
@@ -39,12 +63,16 @@ public class Game_Controller : MonoBehaviour
         }
     }
 
-    private void StartNewGame()
-    {
-        _player_Controller.SpawnNewPlayer();
-    }
 
 
 
+
+
+
+
+
+
+
+ 
 
 }
