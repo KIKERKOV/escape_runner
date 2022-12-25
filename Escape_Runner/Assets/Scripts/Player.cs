@@ -2,20 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public UnityEvent OnPlayerInteract;
+    [SerializeField] private GameObject _playerPrefab;
+    [SerializeField] private GameObject _playerContainer;
+    public Vector2 PlayerPosition;
     public float PlayerSpeed;
-    public Vector2 PlayerPosition = Vector2.zero;
-    private Rigidbody2D _playerRigidBody;
-
     private Player_Camera _playerCamera;
 
     void Start()
     {
-        _playerRigidBody = GetComponent<Rigidbody2D>();
-        PlayerSpeed = 1f;
+        PlayerSpeed = 0.15f;
         _playerCamera = GameObject.Find("Player_Camera").GetComponent<Player_Camera>();
         if (_playerCamera == null){Debug.LogWarning("_playerCamera is NULL");}
         _playerCamera.transform.parent = this.transform;
@@ -23,11 +22,25 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _playerRigidBody.velocity = PlayerPosition * PlayerSpeed;
+        PlayerMovement();
     }
 
-    private void PlayerMovement(InputValue value)
+    private void PlayerMovement()
     {
-        PlayerPosition = value.Get<Vector2>();
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+        Vector2 inputVector = new Vector2(horizontal, vertical);
+
+        if (horizontal != 0)
+        {
+            transform.Translate(inputVector * PlayerSpeed);
+
+            Debug.Log("Horizontal input");
+        }
+        if (vertical != 0)
+        {
+            transform.Translate(inputVector * PlayerSpeed);
+            Debug.Log("Vertical input");
+        }
     }
 }
